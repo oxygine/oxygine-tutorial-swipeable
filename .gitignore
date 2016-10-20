@@ -1,0 +1,5 @@
+proj.win32/Debug_v140_xp/
+*.dll
+proj.win32/Swipeable.VC.db
+proj.win32/.vs/Swipeable/v14/.suo
+proj.win32/Swipeable.VC.VC.opendb
