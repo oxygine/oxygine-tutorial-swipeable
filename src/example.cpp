@@ -10,13 +10,17 @@ void example_preinit() {}
 bool pressed = false;
 Vector2 downPos(0,0);
 
+int current = 0;
+spSprite sprite;
+const char* images[] = {"img1", "img2", "img3", "img4"};
+
 void example_init()
 {
     //load xml file with resources definition
     gameResources.loadXML("res.xml");
 
 
-    spSprite sprite = new Sprite;
+    sprite = new Sprite;
     ResAnim *img = gameResources.getResAnim("img1");
     sprite->setResAnim(img);
     sprite->attachTo(getStage());    
@@ -46,13 +50,31 @@ void example_init()
         {
             pressed = false;
             log::messageln("swipe left");
-            sprite->addTween(Actor::TweenX(sprite->getX() - sprite->getWidth()), 300);
+            sprite->addTween(Actor::TweenX(-sprite->getWidth()), 300);
+            current = (current + 1) % 4;
+
+            spSprite nextSprite = new Sprite;
+            nextSprite->setResAnim(gameResources.getResAnim(images[current]));
+            nextSprite->setX(sprite->getWidth());
+            nextSprite->addTween(Actor::TweenX(0), 300);
+            nextSprite->attachTo(getStage());
+            sprite = nextSprite;
         }
+
         if (dir.x > 50)
         {
             pressed = false;
             log::messageln("swipe right");
-            sprite->addTween(Actor::TweenX(sprite->getX() + sprite->getWidth()), 300);
+            sprite->addTween(Actor::TweenX(sprite->getWidth()), 300);
+            current = (current - 1 + 4) % 4;
+
+
+            spSprite nextSprite = new Sprite;
+            nextSprite->setResAnim(gameResources.getResAnim(images[current]));
+            nextSprite->setX(- nextSprite->getWidth());
+            nextSprite->addTween(Actor::TweenX(0), 300);
+            nextSprite->attachTo(getStage());
+            sprite = nextSprite;
         }
     });
 }
