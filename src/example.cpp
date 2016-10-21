@@ -7,6 +7,9 @@ Resources gameResources;
 void example_preinit() {}
 
 //called from main.cpp
+bool pressed = false;
+Vector2 downPos(0,0);
+
 void example_init()
 {
     //load xml file with resources definition
@@ -18,15 +21,37 @@ void example_init()
     sprite->setResAnim(img);
     sprite->attachTo(getStage());    
 
-    sprite->addEventListener(TouchEvent::TOUCH_DOWN, [=](Event*) {
+    sprite->addEventListener(TouchEvent::TOUCH_DOWN, [=](Event* ev) {
         log::messageln("touch down");
-        sprite->addTween(Actor::TweenX(500), 500);
+
+        TouchEvent *touch = (TouchEvent*)ev;
+        downPos = touch->localPosition;
+        pressed = true;
     });
 
 
     sprite->addEventListener(TouchEvent::TOUCH_UP, [=](Event*) {
         log::messageln("touch up");
-        sprite->addTween(Actor::TweenX(0), 1000);
+        //sprite->addTween(Actor::TweenX(0), 1000);
+        pressed = false;
+    });
+
+    sprite->addEventListener(TouchEvent::MOVE, [=](Event* ev) {
+        if (!pressed)
+            return;
+
+        TouchEvent *touch = (TouchEvent*)ev;
+        Vector2 dir = downPos - touch->localPosition;
+        if (dir.x < -50)
+        {
+            pressed = false;
+            log::messageln("swipe left");
+        }
+        if (dir.x > 50)
+        {
+            pressed = false;
+            log::messageln("swipe right");
+        }
     });
 }
 
