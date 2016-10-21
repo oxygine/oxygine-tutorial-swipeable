@@ -50,7 +50,10 @@ void example_init()
         {
             pressed = false;
             log::messageln("swipe left");
-            sprite->addTween(Actor::TweenX(-sprite->getWidth()), 300);
+            
+            spTween tween = sprite->addTween(Actor::TweenX(-sprite->getWidth()), 300);
+            tween->setDetachActor(true);
+
             current = (current + 1) % 4;
 
             spSprite nextSprite = new Sprite;
@@ -65,7 +68,10 @@ void example_init()
         {
             pressed = false;
             log::messageln("swipe right");
-            sprite->addTween(Actor::TweenX(sprite->getWidth()), 300);
+
+            spTween tween = sprite->addTween(Actor::TweenX(sprite->getWidth()), 300);
+            tween->setDetachActor(true);
+
             current = (current - 1 + 4) % 4;
 
 
