@@ -21,7 +21,7 @@ void example_init()
     sprite->setResAnim(img);
     sprite->attachTo(getStage());    
 
-    sprite->addEventListener(TouchEvent::TOUCH_DOWN, [=](Event* ev) {
+    getStage()->addEventListener(TouchEvent::TOUCH_DOWN, [=](Event* ev) {
         log::messageln("touch down");
 
         TouchEvent *touch = (TouchEvent*)ev;
@@ -30,27 +30,29 @@ void example_init()
     });
 
 
-    sprite->addEventListener(TouchEvent::TOUCH_UP, [=](Event*) {
+    getStage()->addEventListener(TouchEvent::TOUCH_UP, [=](Event*) {
         log::messageln("touch up");
         //sprite->addTween(Actor::TweenX(0), 1000);
         pressed = false;
     });
 
-    sprite->addEventListener(TouchEvent::MOVE, [=](Event* ev) {
+    getStage()->addEventListener(TouchEvent::MOVE, [=](Event* ev) {
         if (!pressed)
             return;
 
         TouchEvent *touch = (TouchEvent*)ev;
-        Vector2 dir = downPos - touch->localPosition;
+        Vector2 dir = touch->localPosition - downPos;
         if (dir.x < -50)
         {
             pressed = false;
-            log::messageln("swipe right");
+            log::messageln("swipe left");
+            sprite->addTween(Actor::TweenX(sprite->getX() - sprite->getWidth()), 300);
         }
         if (dir.x > 50)
         {
             pressed = false;
-            log::messageln("swipe left");
+            log::messageln("swipe right");
+            sprite->addTween(Actor::TweenX(sprite->getX() + sprite->getWidth()), 300);
         }
     });
 }
