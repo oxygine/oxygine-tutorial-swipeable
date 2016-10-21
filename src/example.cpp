@@ -45,12 +45,12 @@ void example_init()
         if (dir.x < -50)
         {
             pressed = false;
-            log::messageln("swipe left");
+            log::messageln("swipe right");
         }
         if (dir.x > 50)
         {
             pressed = false;
-            log::messageln("swipe right");
+            log::messageln("swipe left");
         }
     });
 }
