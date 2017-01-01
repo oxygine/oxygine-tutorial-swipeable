@@ -52,7 +52,7 @@ void example_init()
             log::messageln("swipe left");
             
             spTween tween = sprite->addTween(Actor::TweenX(-sprite->getWidth()), 300);
-            tween->setDetachActor(true);
+            tween->detachWhenDone();
 
             current = (current + 1) % 4;
 
@@ -70,7 +70,7 @@ void example_init()
             log::messageln("swipe right");
 
             spTween tween = sprite->addTween(Actor::TweenX(sprite->getWidth()), 300);
-            tween->setDetachActor(true);
+            tween->detachWhenDone();
 
             current = (current - 1 + 4) % 4;
 
