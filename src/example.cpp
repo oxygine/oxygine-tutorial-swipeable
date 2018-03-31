@@ -26,7 +26,7 @@ void example_init()
     sprite->attachTo(getStage());    
 
     getStage()->addEventListener(TouchEvent::TOUCH_DOWN, [=](Event* ev) {
-        log::messageln("touch down");
+        logs::messageln("touch down");
 
         TouchEvent *touch = (TouchEvent*)ev;
         downPos = touch->localPosition;
@@ -35,7 +35,7 @@ void example_init()
 
 
     getStage()->addEventListener(TouchEvent::TOUCH_UP, [=](Event*) {
-        log::messageln("touch up");
+        logs::messageln("touch up");
         //sprite->addTween(Actor::TweenX(0), 1000);
         pressed = false;
     });
@@ -49,7 +49,7 @@ void example_init()
         if (dir.x < -50)
         {
             pressed = false;
-            log::messageln("swipe left");
+            logs::messageln("swipe left");
             
             spTween tween = sprite->addTween(Actor::TweenX(-sprite->getWidth()), 300);
             tween->detachWhenDone();
@@ -67,7 +67,7 @@ void example_init()
         if (dir.x > 50)
         {
             pressed = false;
-            log::messageln("swipe right");
+            logs::messageln("swipe right");
 
             spTween tween = sprite->addTween(Actor::TweenX(sprite->getWidth()), 300);
             tween->detachWhenDone();
@@ -94,6 +94,8 @@ void example_update()
 //called each frame from main.cpp
 void example_destroy()
 {
+	//free ref go global object
+	sprite = 0;
     //free previously loaded resources
     gameResources.free();
 }
