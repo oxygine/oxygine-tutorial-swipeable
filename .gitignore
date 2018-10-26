@@ -5,3 +5,5 @@ proj.win32/.vs/Swipeable/v14/.suo
 proj.win32/Swipeable.VC.VC.opendb
 proj.win32/Debug_v141/
 proj.win32/.vs/
+proj.cmake/build_emsc_release/
+proj.cmake/data.js
